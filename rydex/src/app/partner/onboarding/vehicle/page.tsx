@@ -1,0 +1,179 @@
+"use client";
+import axios from "axios";
+import {
+  AlertCircle,
+  ArrowLeft,
+  Bike,
+  Car,
+  CircleDashed,
+  Package,
+  Truck,
+} from "lucide-react";
+import { motion } from "motion/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+const VEHICLES = [
+  { id: "bike", label: "Bike", icon: Bike, desc: "2 wheeler" },
+  { id: "auto", label: "Auto", icon: Car, desc: "3 wheeler ride" },
+  { id: "car", label: "Car", icon: Car, desc: "4 wheeler ride" },
+  { id: "loading", label: "Loading", icon: Package, desc: "Small goods" },
+  { id: "truck", label: "Truck", icon: Truck, desc: "Heavy transport" },
+];
+
+const Page = () => {
+  const router = useRouter();
+  const [vehicleType, setVehicleType] = useState("");
+  const [vehicleNumber, setVehicleNumber] = useState("");
+  const [vehicleModel, setVehicleModel] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleVehicle = async () => {
+    setError("");
+    try {
+      setLoading(true);
+      await axios.post("/api/partner/onboarding/vehicle", {
+        type: vehicleType,
+        number: vehicleNumber,
+        vehicleModel,
+      });
+      setLoading(false);
+      router.push("/partner/onboarding/documents");
+    } catch (error: any) {
+      setLoading(false);
+      setError(error?.response?.data?.message ?? "Something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    const handleGetVehicle = async () => {
+      try {
+        const { data } = await axios.get("/api/partner/onboarding/vehicle");
+        setVehicleType(data.type);
+        setVehicleNumber(data.number);
+        setVehicleModel(data.vehicleModel);
+      } catch (error) {
+      }
+    };
+    handleGetVehicle();
+  }, []);
+
+  const canSubmit = vehicleType && vehicleNumber && vehicleModel;
+
+  return (
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 py-8">
+      <motion.div
+        initial={{ opacity: 0, y: 28 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="w-full max-w-xl bg-white rounded-3xl border border-gray-200 shadow-[0_25px_70px_rgba(0,0,0,0.15)] p-6 sm:p-8"
+      >
+        <div className="relative text-center">
+          <button
+            className="absolute left-0 top-0 w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
+            onClick={() => router.back()}
+          >
+            <ArrowLeft size={18} />
+          </button>
+
+          <p className="text-xs text-gray-500 font-medium">step 1 of 3</p>
+
+          <h1 className="text-2xl font-bold mt-1">Vehicle Details</h1>
+
+          <p className="text-sm text-gray-500 mt-2">
+            Add your vehicle information
+          </p>
+        </div>
+
+        <div className="mt-8 space-y-6">
+          <div>
+            <p className="text-xs font-semibold text-gray-500 mb-3">
+              Vehicle Type
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {VEHICLES.map((v) => {
+                const Icon = v.icon;
+                const active = vehicleType == v.id;
+                return (
+                  <motion.div
+                    key={v.id}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.96 }}
+                    onClick={() => setVehicleType(v.id)}
+                    className={`cursor-pointer rounded-2xl border p-4 flex flex-col items-center gap-2 transition ${active ? "bg-black text-white border-black" : "border-gray-200 hover:border-black"}`}
+                  >
+                    <div
+                      className={`w-11 h-11 rounded-full flex items-center justify-center ${active ? "bg-white text-black" : "bg-black text-white"}`}
+                    >
+                      <Icon />
+                    </div>
+
+                    <div className="text-sm font-semibold">{v.label}</div>
+
+                    <p
+                      className={`text-xs ${active ? "text-gray-300" : "text-gray-500"}`}
+                    >
+                      {v.desc}
+                    </p>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="vn" className="text-xs font-semibold text-gray-500">
+              Vehicle Number
+            </label>
+            <input
+              type="text"
+              id="vn"
+              placeholder="MH12AB1234"
+              value={vehicleNumber}
+              onChange={(e) => setVehicleNumber(e.target.value.toUpperCase())}
+              className="mt-2 w-full border-b border-gray-300 pb-2 text-sm focus:outline-none focus:border-black transition"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="vm" className="text-xs font-semibold text-gray-500">
+              Vehicle Model
+            </label>
+            <input
+              type="text"
+              id="vm"
+              placeholder="Tata Ace"
+              value={vehicleModel}
+              onChange={(e) => setVehicleModel(e.target.value)}
+              className="mt-2 w-full border-b border-gray-300 pb-2 text-sm focus:outline-none focus:border-black transition"
+            />
+          </div>
+        </div>
+
+        {error && (
+          <div className="my-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
+            <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+            <p className="text-red-800 text-sm">{error}</p>
+          </div>
+        )}
+
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.97 }}
+          className="mt-8 w-full h-14 rounded-2xl bg-black text-white font-semibold flex items-center justify-center gap-2 disabled:opacity-40 transition cursor-pointer"
+          onClick={handleVehicle}
+          disabled={!canSubmit || loading}
+        >
+          {loading ? (
+            <CircleDashed size={20} color="white" className="animate-spin" />
+          ) : (
+            "Continue"
+          )}
+        </motion.button>
+      </motion.div>
+    </div>
+  );
+};
+
+export default Page;
