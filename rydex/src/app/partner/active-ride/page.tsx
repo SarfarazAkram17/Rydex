@@ -390,7 +390,7 @@ const Page = () => {
                   onClick={() => {
                     handleSendPickUpOtp();
                   }}
-                  className="w-full bg-zinc-900 cursor-pointer hover:bg-zinc-800 active:scale-[97] text-white py-4 rounded-2xl font-bold text-sm tracking-widest transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-zinc-900 cursor-pointer hover:bg-zinc-800 active:scale-[0.97] text-white py-4 rounded-2xl font-bold text-sm tracking-widest transition-all flex items-center justify-center gap-2"
                 >
                   <MapPin size={15} /> I&apos;ve Arrived at Pickup{" "}
                   <ArrowRight size={15} className="ml-1" />
@@ -476,7 +476,7 @@ const Page = () => {
                   onClick={() => {
                     handleSendDropOtp();
                   }}
-                  className="w-full bg-zinc-900 cursor-pointer hover:bg-zinc-800 active:scale-[97] text-white py-4 rounded-2xl font-bold text-sm tracking-widest transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-zinc-900 cursor-pointer hover:bg-zinc-800 active:scale-[0.97] text-white py-4 rounded-2xl font-bold text-sm tracking-widest transition-all flex items-center justify-center gap-2"
                 >
                   <Navigation size={15} /> Mark As Dropped
                   <ArrowRight size={15} className="ml-1" />
@@ -626,8 +626,7 @@ const Page = () => {
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full bg-zinc-900 cursor-pointer hover:bg-zinc-800 text-white py-4 rounded-2xl font-bold text-sm tracking-widest transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-zinc-900 cursor-pointer hover:bg-zinc-800 active:scale-[0.97] text-white py-4 rounded-2xl font-bold text-sm tracking-widest transition-all flex items-center justify-center gap-2"
                   onClick={() => {
                     handleSendPickUpOtp();
                   }}
@@ -713,11 +712,10 @@ const Page = () => {
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
-                  whileTap={{ scale: 0.97 }}
                   onClick={() => {
                     handleSendDropOtp();
                   }}
-                  className="w-full bg-zinc-900 cursor-pointer hover:bg-zinc-800 text-white py-4 rounded-2xl font-bold text-sm tracking-widest transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-zinc-900 cursor-pointer hover:bg-zinc-800 active:scale-[0.97] text-white py-4 rounded-2xl font-bold text-sm tracking-widest transition-all flex items-center justify-center gap-2"
                 >
                   <Navigation size={15} /> Mark As Dropped
                   <ArrowRight size={15} className="ml-1" />
