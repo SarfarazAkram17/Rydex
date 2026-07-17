@@ -296,7 +296,7 @@ const Page = () => {
                   placeholder="Enter your mobile number"
                   inputMode="numeric"
                   maxLength={11}
-                  className="flex-1 bg-transparent text-sm font-semibold text-zinc-900 placeholder:text-zinc-400 outline-none"
+                  className="min-w-0 flex-1 bg-transparent text-sm font-semibold text-zinc-900 placeholder:text-zinc-400 outline-none"
                 />
                 <AnimatePresence>
                   {mobile.length == 11 && (
@@ -350,7 +350,7 @@ const Page = () => {
                       }}
                       value={pickUp}
                       placeholder="Pickup location"
-                      className="flex-1 bg-transparent text-sm font-semibold text-zinc-900 placeholder:text-zinc-400 outline-none"
+                      className="min-w-0 flex-1 bg-transparent text-sm font-semibold text-zinc-900 placeholder:text-zinc-400 outline-none"
                     />
 
                     <motion.button
@@ -432,7 +432,7 @@ const Page = () => {
                           ? "Drop location"
                           : "Select Pick Up Location First"
                       }
-                      className="flex-1 bg-transparent text-sm font-semibold text-zinc-900 placeholder:text-zinc-400 outline-none"
+                      className="min-w-0 flex-1 bg-transparent text-sm font-semibold text-zinc-900 placeholder:text-zinc-400 outline-none"
                     />
 
                     <Navigation size={14} className="text-zinc-300 shrink-0" />
