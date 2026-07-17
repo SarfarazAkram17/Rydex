@@ -23,6 +23,8 @@ app.use(express.json());
 const io = new Server(server, {
   cors: {
     origin: process.env.NEXT_BASE_URL,
+    methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
