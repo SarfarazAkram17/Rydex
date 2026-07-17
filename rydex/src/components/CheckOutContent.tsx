@@ -336,7 +336,7 @@ const CheckOutContent = () => {
             className="bg-white rounded-3xl border border-zinc-200 overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.07)] flex flex-col"
           >
             <div className="h-1 bg-zinc-900" />
-            <div className=" flex-1 px-8 sm:p-10 flex flex-col">
+            <div className=" flex-1 p-8 sm:p-10 flex flex-col">
               <AnimatePresence mode="wait">
                 {(status == "idle" || status == "rejected") && (
                   <motion.div
